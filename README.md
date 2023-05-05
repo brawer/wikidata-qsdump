@@ -15,5 +15,14 @@ Wikidata dump to [QuickStatements](https://www.wikidata.org/wiki/Help:QuickState
 rank) in [Zstandard](https://en.wikipedia.org/wiki/Zstd) compression.
 
 
+| Format      | File size                        | Decompression time   |
+|-------------|----------------------------------|----------------------|
+| `.json.bz2` | 81539742715 Bytes (81.5 GB)      |                 TODO |
+| `.qs.zst`   | 28567267401 Bytes (28.6 GB)      |                 TODO |
+
+Measured on Wikidata dump of April 24, 2023
+
+
+
 
 
