@@ -1,24 +1,52 @@
-# Wikidata QuickStatements Dump
+# Experiment: New Format for Wikidata Dumps?
 
-This is an experiment for a new, more compact and faster to process
-data format for the [Wikidata](https://wikidata.org) knowledge graph.
-
-Currently, Wikidata gets dumped into a large JSON file that gets compressed
-with the bzip2 compression algorithm. However, the current JSON syntax is
-very verbose, which makes it slow (and memory-intensive) to parse. Also,
-decoding a bzip2-compressed stream is very CPU-intensive. In combination,
-this makes it expensive (in terms of CPU, memory and ultimately money)
-to process Wikidata. The purpose of this experiment is to quantify the
-gains if Wikidata were to adopt a more compact format and a more modern
-compression algorithm. Specifically, this experiment converts the current
-Wikidata dump to [QuickStatements](https://www.wikidata.org/wiki/Help:QuickStatements) format (with small extensions, eg. to express deprecated and preferred
-rank) in [Zstandard](https://en.wikipedia.org/wiki/Zstd) compression.
-
+This is an experiment for a new, more compact and much faster to process
+data format for [Wikidata](https://wikidata.org).
 
 | Format      |   Size¹ |  Decompression time² |
 |-------------|---------|----------------------|
 | `.json.bz2` |    100% |                 100% |
 | `.qs.zst`   |     35% |                 TODO |
+
+
+As of May 2023, the most compact format for [Wikidata dumps](https://dumps.wikimedia.org/wikidatawiki/entities/20230424/) is JSON with bzip2 compression.
+(Additionally, there’s also other encodings, which we ignore for this
+discussion because they taken even more space than `.json.bz2`).
+we ignore them because they are even more verbose).
+However, the current JSON syntax is quite verbose, which makes it slow
+to process. Also, the bzip2 compression compression algorithm has been
+designed almost 30 years ago; meanwhile, newer algorithms have been designed
+that can be decompressed much faster on today’s machines.
+
+As a frequent user of Wikidata dumps, I got annoyed by the cost of
+processing the current format, and wondered how a better format
+could look. Specifically, a new format should:
+
+* be significantly smaller in size;
+* be significantly faster to decompress;
+* be easy to understand;
+* feel familiar to experienced Wikidata editors;
+* be easily processable with standard libraries.
+
+For bulk maintenance, Wikidata editors typically use the
+[QuickStatements tool](https://www.wikidata.org/wiki/Help:QuickStatements).
+The tool takes editing commands in a text syntax that is easy to understand,
+very compact, and it is already familiar by many Wikidata maintainers.
+
+Therefore, I wondered whether Wikidata dumps could be encoded
+as QuickStatements with a modern compression algorithm such as
+[Zstandard](https://en.wikipedia.org/wiki/Zstd). Note
+that the current QuickStatements syntax does not (yet) cover the entire
+Wikidata semantics. The biggest missing part is being able to
+express preferred and deprecated ranks. For the purpose of this experiment,
+I came up with an ad-hoc encoding that uses ↑ and ↓ arrows for  rank, as in
+`Q123|P987|↑"foo bar"@en`. The other missing parts are super minor,
+such as coordinates of places that are located on other planets than Earth.
+Since there is very little such data, I decided to skip such statements
+from this experiment. Of course, these should have to be implemented
+(by defining a QuickStatements syntax, and supporting it in the live
+QuickStatments tool) if Wikidata wanted to adopt QuickStatements as
+its new dump format.
 
 
 1. Size
