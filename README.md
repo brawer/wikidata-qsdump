@@ -78,15 +78,6 @@ the same point in time like all other data.
 allow data consumers to build their own data structures (eg. an LMDB
 B-tree or similar) without having to re-shuffle all of Wikidata.
 
-4. Better hosting. Currently, access to dump files seems to get
-throttled at 5 MBit/s, even when reading from Wikimedia’s own datacenters
-(Tooforge and Cloud VPS). In comparison, cheap cloud providers like
-Hetzner or DigitalOcean can sequentially read data from mounted volumes
-at TODO MBit/s. It’s not obvious why Wikimedia’s cloud is that much slower;
-in all likelihood, Hetzner and DigitalOcean use [Ceph](https://en.wikipedia.org/wiki/Ceph_(software)) for storage, just like everyone else. Maybe it
-is a hardware problem, or (more likely) at configuration problem. In any
-case, it would be really nice if this could be improved.
-
 For this experiment, I have not bothered with any of this since it does
 not affect the format. (Actually, sorting as in #3 might slightly
 change the file size, perhaps making it smaller by a small amount;
