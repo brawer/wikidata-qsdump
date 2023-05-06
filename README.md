@@ -1,7 +1,7 @@
 # Experiment: New Format for Wikidata Dumps?
 
-This is an experiment for a simpler, more compact and faster (to decompress)
-data format for [Wikidata](https://wikidata.org).
+This is an experiment for a simpler, smaller and faster decompressible
+data format for [Wikidata dumps](https://www.wikidata.org/wiki/Wikidata:Database_download).
 
 | Format      |     Size¹ |  Decompression time² |
 |-------------|-----------|----------------------|
