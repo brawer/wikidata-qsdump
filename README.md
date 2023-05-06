@@ -39,11 +39,11 @@ such as [Zstandard](https://en.wikipedia.org/wiki/Zstd).
 
 ## Extensions to QuickStatements syntax
 
-Note that the current QuickStatements syntax cannot yet express 100% of
-Wikidata.  The main missing piece is ranking. In this experiment, I
-used ↑ and ↓ arrows for preferred and deprecated rank, as in
-`Q12|P9|↑"foo"`. The other missing parts were very minor and rare, such as
-coordinates on Venus and Mars; I did not bother for the experiment. To
+Note that the current QuickStatements syntax cannot yet express all of
+Wikidata.  The only major missing piece is ranking. For this experiment, I
+used ↑ and ↓ arrows to encode preferred and deprecated rank, as in
+`Q12|P9|↑"foo"`. The other missing parts are minor and rare, such as
+coordinates on Venus and Mars; I did not bother for this experiment. To
 express Wikidata dumps in QuickStatements format, suitable syntax
 would need to be defined and properly documented. Of course, it would
 then also make sense to extend the live QuickStatments tool, so it supports
