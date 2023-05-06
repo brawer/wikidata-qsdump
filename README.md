@@ -3,14 +3,15 @@
 This is an experiment for a new, more compact and much faster to process
 data format for [Wikidata](https://wikidata.org).
 
-| Format      |   Size¹ |  Decompression time² |
-|-------------|---------|----------------------|
-| `.json.bz2` |    100% |                 100% |
-| `.qs.zst`   |     35% |                 TODO |
+| Format      |     Size¹ |  Decompression time² |
+|-------------|-----------|----------------------|
+| `.json.bz2` |  75.9 GiB |                 TODO |
+| `.qs.zst`   |  26.6 GiB |                 TODO |
 
 
-The proposed new format takes only a third of the current size,
-and decompression would be TODO times faster than today.
+The proposed new dump format, QuickStatements in ZStandard compression,
+takes only a third of the current file size. Measured on a typical
+modern cloud server, decompression would be TODO times faster than today.
 
 
 ## Motivation
