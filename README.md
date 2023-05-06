@@ -15,13 +15,18 @@ Wikidata dump to [QuickStatements](https://www.wikidata.org/wiki/Help:QuickState
 rank) in [Zstandard](https://en.wikipedia.org/wiki/Zstd) compression.
 
 
-| Format      | File size                        | Decompression time   |
-|-------------|----------------------------------|----------------------|
-| `.json.bz2` | 81539742715 Bytes (81.5 GB)      |                 TODO |
-| `.qs.zst`   | 28567267401 Bytes (28.6 GB)      |                 TODO |
+| Format      |   Size¹ |  Decompression time² |
+|-------------|---------|----------------------|
+| `.json.bz2` |    100% |                 100% |
+| `.qs.zst`   |     35% |                 TODO |
 
-Measured on Wikidata dump of April 24, 2023
 
+1. Size
+    * `wikidata-20230424-all.json.bz2`: 81539742715 bytes = 75.9 GiB
+	* `wikidata-20230424-all.qs.zst`: 28567267401 bytes = 26.6 GiB
+2. Decompression time measured on [Hetzner Cloud](https://www.hetzner.com/cloud), virtual machine model CAX41, 16 virtual Ampere ARM64 CPU cores, 32 GB RAM, Debian GNU/Linux 11 (bullseye), Kernel 5.10.0-21-arm64
+    * `time pbzip2 -dc wikidata-20230424-all.json.bz2 >/dev/null`, parallel pbzip2 version 1.1.13, three runs [TODO, TODO, TODO], average decompression time = TODO seconds
+    * `time zstdcat wikidata-20230424-all.qs.zst >/dev/null`, zstdcat version 1.4.8, three runs [369 s, TODO, TODO], average decompression time = TODO seconds
 
 
 
