@@ -59,22 +59,19 @@ In a new version of Wikidata dumps, I think it would be good to
 address some other things. From most to least important:
 
 1. Wikidata dumps should be atomic snapshots, taken at a single point
-in time. Consumers should be able to apply real-time updates to the
-dump, asking for all changes after the snapshop was taken.
-Currently, the dump contains the last modification time for every item,
-but that time is not consistent across the dump. This fuzziness
-makes it difficult for users to build reliable systems. Since Wikidata
-preserves the entire edit history in its production database, generating
-atomic snapshots should be quite doable; the exporter would simply have to
-ignore any changes that were made to the live databse after the dump process
-had started running.
+in time. Consumers should be able to take a dump and then apply all
+changes made after its snapshot time. Currently, the snapshot time varies
+across items, which makes it difficult to build reliable systems.
+Generating consistent snapshots should be possible since Wikidata’s
+production database contains the edit history; the generator could simply
+ignore any changes to the live database that are more recent than
+the snapshot time.
 
 2. It would be nice if the dump also included redirects and the information
 which items have been deleted. This should be atomically snapshotted at
 the same point in time like all other data.
 
-3. Statements should be sorted by subect entity ID. For the dump
-generation process, the added expense would be small, and this would
+3. Statements should be sorted by subject entity ID. This would
 allow data consumers to build their own data structures (eg. an LMDB
 B-tree or similar) without having to re-shuffle all of Wikidata.
 
