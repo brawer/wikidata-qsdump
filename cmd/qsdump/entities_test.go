@@ -58,4 +58,16 @@ func TestExtractQuickStatements(t *testing.T) {
 		t.Error(err)
 		return
 	}
+	got := out.Bytes()
+
+	want, err := os.ReadFile(filepath.Join("testdata", "entities.qs"))
+	if err != nil {
+		t.Error(err)
+		return
+	}
+
+	if !bytes.Equal(got, want) {
+		t.Errorf("got unexpected result, see testdata/got_entities.qs")
+		_ = os.WriteFile(filepath.Join("testdata", "got_entities.qs"), got, 0666)
+	}
 }
