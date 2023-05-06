@@ -1,6 +1,6 @@
 # Experiment: New Format for Wikidata Dumps?
 
-This is an experiment for a new, more compact and much faster to process
+This is an experiment for a simpler, more compact and faster (to decompress)
 data format for [Wikidata](https://wikidata.org).
 
 | Format      |     Size¹ |  Decompression time² |
@@ -9,9 +9,12 @@ data format for [Wikidata](https://wikidata.org).
 | `.qs.zst`   |  26.6 GiB |                 TODO |
 
 
-The proposed new dump format, QuickStatements in ZStandard compression,
-takes only about a third of the current file size. Measured on a typical
-modern cloud server, decompression would be TODO times faster than today.
+The proposed format,
+[QuickStatements](https://www.wikidata.org/wiki/Help:QuickStatements)
+with [Zstandard](https://en.wikipedia.org/wiki/Zstd) compression, would
+take about a third of the current file size. On a
+typical modern cloud server, decompression would be TODO times faster
+than today.
 
 
 ## Motivation
