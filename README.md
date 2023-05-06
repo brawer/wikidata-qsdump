@@ -10,7 +10,7 @@ data format for [Wikidata](https://wikidata.org).
 
 
 The proposed new dump format, QuickStatements in ZStandard compression,
-takes only a third of the current file size. Measured on a typical
+takes only about a third of the current file size. Measured on a typical
 modern cloud server, decompression would be TODO times faster than today.
 
 
@@ -23,12 +23,10 @@ verbose, which makes it slow to process. Another issue is bzip2: since
 its invention 27 years ago, newer algorithms have been designed that
 can be decompressed much faster on today’s machines.
 
-As a frequent user of Wikidata dumps, I got annoyed by the cost of
-processing the current format, and wondered how a better format could
-look. Specifically, a new format should: be significantly smaller in
-size; be significantly faster to decompress; be easy to understand;
-feel familiar to experienced Wikidata editors; and be easily
-processable with standard libraries.
+As a frequent user of Wikidata dumps, I got annoyed by the high cost of
+processing the current format, and I wondered how much could be gained
+from a better format. Specifically, a new format should be significantly
+smaller in size; much faster to decompress; and easy to understand.
 
 Wikidata editors frequently use the [QuickStatements
 tool](https://www.wikidata.org/wiki/Help:QuickStatements) for bulk
@@ -62,24 +60,36 @@ address some other things. From most to least important:
 
 1. Wikidata dumps should be atomic snapshots, taken at a single point
 in time. Consumers should be able to apply real-time updates to the
-dump, asking for all changes since the timestamp of the dump (or
-possibly the edit sequence number). Currently, this is very fuzzy,
-which makes it difficult to build reliable systems based on Wikidata
-dumps.
+dump, asking for all changes after the snapshop was taken.
+Currently, the dump contains the last modification time for every item,
+but that time is not consistent across the dump. This fuzziness
+makes it difficult for users to build reliable systems. Since Wikidata
+preserves the entire edit history in its production database, generating
+atomic snapshots should be quite doable; the exporter would simply have to
+ignore any changes that were made to the live databse after the dump process
+had started running.
 
-2. Statements should be sorted by entity ID. For the dump generation
-process, the added expense would be marginal, and it would allow data
-consumers to build their own data structures (eg. an LMDB B-tree or
-similar) without having to re-shuffle all of Wikidata.
+2. It would be nice if the dump also included redirects and the information
+which items have been deleted. This should be atomically snapshotted at
+the same point in time like all other data.
 
-3. Better hosting. The Wikimedia dumps are currently hosted on servers
-with abysmal bandwidth.  Even from within Wikimedia’s own datacenters
-(specifically, Tooforge and Cloud VPS), bandwidth seems to be
-throttled at about 5 MBit/s. For 2023, this is incredibly slow.
+3. Statements should be sorted by subect entity ID. For the dump
+generation process, the added expense would be small, and this would
+allow data consumers to build their own data structures (eg. an LMDB
+B-tree or similar) without having to re-shuffle all of Wikidata.
+
+4. Better hosting. Currently, access to dump files seems to get
+throttled at 5 MBit/s, even when reading from Wikimedia’s own datacenters
+(Tooforge and Cloud VPS). In comparison, cheap cloud providers like
+Hetzner or DigitalOcean can sequentially read data from mounted volumes
+at TODO MBit/s. It’s not obvious why Wikimedia’s cloud is that much slower;
+in all likelihood, Hetzner and DigitalOcean use [Ceph](https://en.wikipedia.org/wiki/Ceph_(software)) for storage, just like everyone else. Maybe it
+is a hardware problem, or (more likely) at configuration problem. In any
+case, it would be really nice if this could be improved.
 
 For this experiment, I have not bothered with any of this since it does
-not affect the format discussion. (The sorting of #2 might slightly
-change the file size, perhaps making it smaller by a small amount,
+not affect the format. (Actually, sorting as in #3 might slightly
+change the file size, perhaps making it smaller by a small amount;
 but the difference is unlikely to be significant). I’m just noting this
 as a wishlist for re-implementing Wikidata dumps.
 
