@@ -70,9 +70,9 @@ production database contains the edit history; the generator could simply
 ignore any changes to the live database that are more recent than
 the snapshot time.
 
-2. It would be nice if the dump also included redirects and the information
-which items have been deleted. This should be atomically snapshotted at
-the same point in time like all other data.
+2. It would be nice if the dump could also include redirects, and indicate
+which items have been deleted. For consistency, this should be snapshotted
+at the same point in time as the actual data.
 
 3. Statements should be sorted by subject entity ID. This would
 allow data consumers to build their own data structures (eg. an LMDB
