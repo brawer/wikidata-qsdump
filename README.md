@@ -5,8 +5,8 @@ data format for [Wikidata dumps](https://www.wikidata.org/wiki/Wikidata:Database
 
 | Format      |     Size¹ |  Decompression time² |
 |-------------|-----------|----------------------|
-| `.json.bz2` |  75.9 GiB |                 TODO |
-| `.qs.zst`   |  26.6 GiB |                 TODO |
+| `.json.bz2` |  75.9 GiB |              926 min |
+| `.qs.zst`   |  26.6 GiB |                6 min |
 
 
 The proposed format,
@@ -91,5 +91,5 @@ as a wishlist for re-implementing Wikidata dumps.
     * `wikidata-20230424-all.json.bz2`: 81539742715 bytes = 75.9 GiB
 	* `wikidata-20230424-all.qs.zst`: 28567267401 bytes = 26.6 GiB
 2. Decompression time measured on [Hetzner Cloud](https://www.hetzner.com/cloud), Falkenstein data center, virtual machine model CAX41, Ampere ARM64 CPU, 16 cores, 32 GB RAM, Debian GNU/Linux 11 (bullseye), Kernel 5.10.0-21-arm64, data files located on a mounted 120 GiB volume
-    * `time pbzip2 -dc wikidata-20230424-all.json.bz2 >/dev/null`, parallel pbzip2 version 1.1.13, TODO user/real/system secondcs
+    * `time pbzip2 -dc wikidata-20230424-all.json.bz2 >/dev/null`, parallel pbzip2 version 1.1.13 → real: 926m39.401s, user: 930m39.828s, sys: 3m30.333s
     * `time zstdcat wikidata-20230424-all.qs.zst >/dev/null`, zstdcat version 1.4.8, three runs [369 s, TODO, TODO], average decompression time = TODO seconds
