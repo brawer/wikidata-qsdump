@@ -68,8 +68,8 @@ need (small, backwards-compatible) extensions to the QuickStatement syntax:
 (a) allow multiple labels, aliases
 and sitelinks, as in `Q2|Len|"Earth"|Aen|"Planet Earth"|Lfr|"Terre"`;
 (b) allow multiple claims (not just multiple qualifiers) on the same
-entity, perhaps by giving `!P` a similar semantics like `!S` already has.
-This would also make the format a bit more compact.
+line, perhaps with a `!P` construct similar to the existing `!S`.
+This would also make the format slightly more compact.
 
 ## Other issues with Wikidata dumps
 
