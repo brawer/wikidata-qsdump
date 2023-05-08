@@ -3,19 +3,23 @@
 This is an experiment for a simpler, smaller and much faster (to decompress)
 data format for [Wikidata dumps](https://www.wikidata.org/wiki/Wikidata:Database_download).
 
-| Format      |     Size¹ |    Decompression time² |
-|-------------|-----------|------------------------|
-| `.json.bz2` |  75.9 GiB |     5 hours 26 minutes |
-| `.qs.zst`   |  26.6 GiB |              6 minutes |
+| Format      |     Size¹ | Tool   |   Decompression time² |
+|-------------|-----------|--------|-----------------------|
+| `.json.bz2` |  75.9 GiB | pbzip2 |    5 hours 26 minutes |
+| `.json.bz2` |  75.9 GiB | lbzip2 |            59 minutes |
+| `.qs.zst`   |  26.6 GiB | zstd   |             6 minutes |
 
 
 The proposed format,
 [QuickStatements](https://www.wikidata.org/wiki/Help:QuickStatements)
 with [Zstandard](https://en.wikipedia.org/wiki/Zstd) compression, takes
 about a third of the current best file size. On a typical modern cloud
-server, decompression gets about 150 times faster than with the current
-format. The speed-up can largely be explained with a compression algorithm
-that has been desiged to make good use of today’s multi-core hardware.
+server, decompression gets about 10 times faster than with the current
+format (using an exotic bzip2 tool; compared to standard parallel bzip2,
+which seems to be unable to decode Wikidata in parallel, the speedup is
+is 150 times). The speed-up can largely be explained with a compression
+algorithm that has been desiged to make good use of today’s multi-core
+hardware.
 
 
 ## Motivation
@@ -99,7 +103,8 @@ as a wishlist for re-implementing Wikidata dumps.
     * `wikidata-20230424-all.json.bz2`: 81539742715 bytes = 75.9 GiB
 	* `wikidata-20230424-all.qs.zst`: 28567267401 bytes = 26.6 GiB
 2. Decompression time measured on [Hetzner Cloud](https://www.hetzner.com/cloud), Falkenstein data center, virtual machine model CAX41, Ampere ARM64 CPU, 16 cores, 32 GB RAM, Debian GNU/Linux 11 (bullseye), Kernel 5.10.0-21-arm64, data files located on a mounted 120 GiB ext4 volume
-    * `time pbzip2 -dc wikidata-20230424-all.json.bz2 >/dev/null`, parallel pbzip2 version 1.1.13 → real 926m39.401s, user: 930m39.828s, sys: 3m30.333s
+    * `time pbzip2 -dc wikidata-20230424-all.json.bz2 >/dev/null`, parallel pbzip2 version 1.1.13 → real 926m39.401s, user 930m39.828s, sys 3m30.333s
+	* `time lbzcat -cd wikidata-20230424-all.json.bz2 >/dev/null`, lbzip2 version 2.5 → real 59m30.694s, user 943m48.935s, sys 7m30.243s
     * `time zstdcat wikidata-20230424-all.qs.zst >/dev/null`, zstdcat version 1.4.8 → run 1: real 5m58.011s, user 5m51.994s, sys 0m5.996s;
 	run 2: real 5m55.021s, user 5m47.642s, sys 0m7.364s;
 	run 3: real 5m53.228s, user 5m47.401s, sys 0m5.820s;
