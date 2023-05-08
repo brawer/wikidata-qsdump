@@ -62,12 +62,12 @@ when a quoted string contained a quote, as in `"foo \u0022 bar"`.
 
 A nice property of the current JSON format is that each item is encoded
 on a separate line. It might be nice to preserve this property. This would
-need slights syntax extension: (a) allow multiple labels, aliases
+need (small, backwards-compatible) extensions to the QuickStatement syntax:
+(a) allow multiple labels, aliases
 and sitelinks, as in `Q2|Len|"Earth"|Aen|"Planet Earth"|Lfr|"Terre"`;
 (b) allow multiple claims (not just multiple qualifiers) on the same
 entity, perhaps by giving `!P` a similar semantics like `!S` already has.
-This would also make the format a bit more compact and lead to slightly
-smaller compressed files.
+This would also make the format a bit more compact.
 
 ## Other issues with Wikidata dumps
 
