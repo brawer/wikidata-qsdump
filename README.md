@@ -18,10 +18,9 @@ cloud server, decompression is about 10 times faster compared to lbzip2,
 an exotic tool for the bzip2 format.
 (Compared to the more commonly used pbzip2 tool, the speed-up is 150 times;
 despite being designed for multi-core machines, pbzip2 appears to use
-just one core when decoding Wikidata dumps, possibly due to a quirk
-in the format of Wikidata dumps). The speed-up can largely
-be explained with a compression algorithm that has been designed
-for fast decompression on today’s hardware.
+just a single core, possibly due to a structural quirk of Wikidata dumps).
+The speed-up can largely be explained with a compression algorithm
+that has been designed for fast decompression on today’s hardware.
 
 
 ## Motivation
