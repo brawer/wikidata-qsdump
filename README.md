@@ -1,20 +1,21 @@
 # Experiment: New Format for Wikidata Dumps?
 
-This is an experiment for a simpler, smaller and faster decompressible
+This is an experiment for a simpler, smaller and much faster (to decompress)
 data format for [Wikidata dumps](https://www.wikidata.org/wiki/Wikidata:Database_download).
 
-| Format      |     Size¹ |  Decompression time² |
-|-------------|-----------|----------------------|
-| `.json.bz2` |  75.9 GiB |              926 min |
-| `.qs.zst`   |  26.6 GiB |                6 min |
+| Format      |     Size¹ |    Decompression time² |
+|-------------|-----------|------------------------|
+| `.json.bz2` |  75.9 GiB |     5 hours 26 minutes |
+| `.qs.zst`   |  26.6 GiB |              6 minutes |
 
 
 The proposed format,
 [QuickStatements](https://www.wikidata.org/wiki/Help:QuickStatements)
-with [Zstandard](https://en.wikipedia.org/wiki/Zstd) compression, would
-take about a third of the current file size. On a
-typical modern cloud server, decompression would be TODO times faster
-than today.
+with [Zstandard](https://en.wikipedia.org/wiki/Zstd) compression, takes
+about a third of the current best file size. On a typical modern cloud
+server, decompression gets about 150 times faster than with the current
+format. The speed-up can largely be explained with a compression algorithm
+that has been desiged to make good use of today’s multi-core hardware.
 
 
 ## Motivation
@@ -41,30 +42,37 @@ such as [Zstandard](https://en.wikipedia.org/wiki/Zstd).
 
 ## Extensions to QuickStatements syntax
 
-Note that the current QuickStatements syntax cannot yet express all of
-Wikidata.  The only major missing piece is ranking. For this experiment, I
-used ↑ and ↓ arrows to encode preferred and deprecated rank, as in
-`Q12|P9|↑"foo"`. The other missing parts are minor and rare, such as
-coordinates on Venus and Mars; I did not bother for this experiment. To
-express Wikidata dumps in QuickStatements format, suitable syntax
-would need to be defined and properly documented. Of course, it would
-then also make sense to extend the live QuickStatments tool, so it supports
-the exact same syntax as the dumps.
+Note that the current QuickStatements syntax cannot express all of
+Wikidata; the major missing piece is ranking. For this experiment, I
+encocded preferred and deprecated rank with ↑ and ↓ arrows, as in
+`Q12|P9|↑"foo"`. All other missing parts are minor and rare, such as
+coordinates on Venus and Mars; for this experiment, I pretended these
+were on Earth. To fully encode all of Wikidata as QuickStatements,
+suitable syntax would need to be defined and properly documented.
+Obviously, it would then also make sense to support this new syntax
+in the live QuickStatments tool.
 
-Currently, QuickStatements does not really define an escape mechanism
+Currently, QuickStatements does not seem to define an escape mechanism
 for quote characters. In my experiment, I used an Unicode escape sequence
 when a quoted string contained a quote, as in `"foo \u0022 bar"`.
 
+A nice property of the current JSON format is that each item is encoded
+on a separate line. It might be nice to preserve this property. This would
+need slights syntax extension: (a) allow multiple labels, aliases
+and sitelinks, as in `Q2|Len|"Earth"|Aen|"Planet Earth"|Lfr|"Terre"`;
+(b) allow multiple claims (not just multiple qualifiers) on the same
+entity, perhaps by giving `!P` a similar semantics like `!S` already has.
+This would also make the format a bit more compact and lead to slightly
+smaller compressed files.
 
 ## Other issues with Wikidata dumps
 
 In a new version of Wikidata dumps, I think it would be good to
-address some other things. From most to least important:
+address some other things.
 
-1. Wikidata dumps should be atomic snapshots, taken at a single point
-in time. Consumers should be able to take a dump and then apply all
-changes made after its snapshot time. Currently, the snapshot time varies
-across items, which makes it difficult to build reliable systems.
+1. Wikidata dumps should be atomic snapshots, taken at a defined point
+in time. Currently, each item is getting dumped at a slightly different
+time. This fuzziness makes it difficult to build reliable systems.
 Generating consistent snapshots should be possible since Wikidata’s
 production database contains the edit history; the generator could simply
 ignore any changes to the live database that are more recent than
@@ -90,6 +98,9 @@ as a wishlist for re-implementing Wikidata dumps.
 1. Size
     * `wikidata-20230424-all.json.bz2`: 81539742715 bytes = 75.9 GiB
 	* `wikidata-20230424-all.qs.zst`: 28567267401 bytes = 26.6 GiB
-2. Decompression time measured on [Hetzner Cloud](https://www.hetzner.com/cloud), Falkenstein data center, virtual machine model CAX41, Ampere ARM64 CPU, 16 cores, 32 GB RAM, Debian GNU/Linux 11 (bullseye), Kernel 5.10.0-21-arm64, data files located on a mounted 120 GiB volume
-    * `time pbzip2 -dc wikidata-20230424-all.json.bz2 >/dev/null`, parallel pbzip2 version 1.1.13 → real: 926m39.401s, user: 930m39.828s, sys: 3m30.333s
-    * `time zstdcat wikidata-20230424-all.qs.zst >/dev/null`, zstdcat version 1.4.8, three runs [369 s, TODO, TODO], average decompression time = TODO seconds
+2. Decompression time measured on [Hetzner Cloud](https://www.hetzner.com/cloud), Falkenstein data center, virtual machine model CAX41, Ampere ARM64 CPU, 16 cores, 32 GB RAM, Debian GNU/Linux 11 (bullseye), Kernel 5.10.0-21-arm64, data files located on a mounted 120 GiB ext4 volume
+    * `time pbzip2 -dc wikidata-20230424-all.json.bz2 >/dev/null`, parallel pbzip2 version 1.1.13 → real 926m39.401s, user: 930m39.828s, sys: 3m30.333s
+    * `time zstdcat wikidata-20230424-all.qs.zst >/dev/null`, zstdcat version 1.4.8 → run 1: real 5m58.011s, user 5m51.994s, sys 0m5.996s;
+	run 2: real 5m55.021s, user 5m47.642s, sys 0m7.364s;
+	run 3: real 5m53.228s, user 5m47.401s, sys 0m5.820s;
+	average: real 5m55.420s, user 5m49.012s, sys 0m6.393s
