@@ -12,16 +12,15 @@ data format for [Wikidata dumps](https://www.wikidata.org/wiki/Wikidata:Database
 
 The proposed new format,
 [QuickStatements](https://www.wikidata.org/wiki/Help:QuickStatements)
-with [Zstandard](https://en.wikipedia.org/wiki/Zstd) compression, takes
-about a third of the current best file size. On a typical modern cloud
-server, decompression gets about 10 times faster compared to the best
-available (and little known) bzip2 decompressor. (Strangely, the
-better-known pbzip2 tool, even though it’s supposed to make use
-of multi-core machines, appears to decode Wikidata dumps with
-just a single CPU; compared to pbzip2, decompression gets 150 times
-faster). The speed-up can largely be explained
-with a compression algorithm that has been desiged to make good use
-of today’s multi-core hardware.
+with [Zstandard](https://en.wikipedia.org/wiki/Zstd) compression,
+takes about a third of the current best file size. On a typical modern
+cloud server, decompression gets about 10 times faster compared to the
+best available (and little known) bzip2 decompressor. (Strangely, the
+better-known pbzip2 tool, even though it’s supposed to make use of
+multi-core machines, appears to decode Wikidata dumps with just a
+single CPU; compared to pbzip2, decompression gets 150 times
+faster). The speed-up can largely be explained with a compression
+algorithm that has been desiged for today’s hardware.
 
 
 ## Motivation
