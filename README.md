@@ -3,18 +3,18 @@
 This is an experiment for a simpler, smaller and much faster (to decompress)
 data format for [Wikidata dumps](https://www.wikidata.org/wiki/Wikidata:Database_download).
 
-| Format      |     Size¹ | Tool   |   Decompression time² |
-|-------------|-----------|--------|-----------------------|
-| `.json.br`  |      TODO | brotli |                  TODO |
-| `.json.bz2` |  75.9 GiB | pbzip2 |           926 minutes |
-| `.json.bz2` |  75.9 GiB | lbzip2 |            59 minutes |
-| `.json.gz`  | 115.2 GiB | gzip   |                  TODO |
-| `.json.zst` |      TODO | zstd   |                  TODO |
-| `.qs.br`    |      TODO | brotli |                  TODO |
-| `.qs.bz2`   |  26.3 GiB | pbzip2 |                  TODO |
-| `.qs.bz2`   |  26.3 GiB | lbzip2 |                  TODO |
-| `.qs.gz`    |  38.9 GiB | gzip   |            23 minutes |
-| `.qs.zst`   |  26.6 GiB | zstd   |             6 minutes |
+| Format      |     Size¹ | Tool   | Decompression time² |
+| ----------- | --------: | ------ | ------------------: |
+| `.json.br`  |      TODO | brotli |                TODO |
+| `.json.bz2` |  75.9 GiB | pbzip2 |         926 minutes |
+| `.json.bz2` |  75.9 GiB | lbzip2 |          59 minutes |
+| `.json.gz`  | 115.2 GiB | gzip   |                TODO |
+| `.json.zst` |      TODO | zstd   |                TODO |
+| `.qs.br`    |      TODO | brotli |                TODO |
+| `.qs.bz2`   |  26.3 GiB | pbzip2 |                TODO |
+| `.qs.bz2`   |  26.3 GiB | lbzip2 |                TODO |
+| `.qs.gz`    |  38.9 GiB | gzip   |          23 minutes |
+| `.qs.zst`   |  26.6 GiB | zstd   |           6 minutes |
 
 
 The proposed new format,
