@@ -9,7 +9,7 @@ data format for [Wikidata dumps](https://www.wikidata.org/wiki/Wikidata:Database
 | `.json.bz2` |  75.9 GiB | pbzip2 |         926 minutes |
 | `.json.bz2` |  75.9 GiB | lbzip2 |          59 minutes |
 | `.json.gz`  | 115.2 GiB | gzip   |                TODO |
-| `.json.zst` |      TODO | zstd   |                TODO |
+| `.json.zst` |  72.3 GiB | zstd   |                TODO |
 | `.qs.br`    |      TODO | brotli |                TODO |
 | `.qs.bz2`   |  26.3 GiB | pbzip2 |                TODO |
 | `.qs.bz2`   |  26.3 GiB | lbzip2 |                TODO |
@@ -108,11 +108,12 @@ as a wishlist for re-implementing Wikidata dumps.
 ## Footnotes
 
 1. Size
-    * `wikidata-20230424-all.json.bz2`: 81539742715 bytes = 75.9 GiB
-    * `wikidata-20230424-all.json.gz`: 123717867013 bytes = 115.2 GiB
-    * `wikidata-20230424-all.qs.bz2`: 28229997539 bytes = 26.3 GiB
-    * `wikidata-20230424-all.qs.gz`:    41820873140 bytes = 38.9 GiB
-    * `wikidata-20230424-all.qs.zst`: 28567267401 bytes = 26.6 GiB
+    * `wikidata-20230424-all.json.bz2`:  81539742715 bytes =  75.9 GiB
+    * `wikidata-20230424-all.json.gz`:  123717867013 bytes = 115.2 GiB
+    * `wikidata-20230424-all.json.zst`:  77593744874 bytes =  72.3 GiB
+    * `wikidata-20230424-all.qs.bz2`:    28229997539 bytes =  26.3 GiB
+    * `wikidata-20230424-all.qs.gz`:     41820873140 bytes =  38.9 GiB
+    * `wikidata-20230424-all.qs.zst`:    28567267401 bytes =  26.6 GiB
 
 2. Decompression time measured on [Hetzner Cloud](https://www.hetzner.com/cloud), Falkenstein data center, virtual machine model CAX41, Ampere ARM64 CPU, 16 cores, 32 GB RAM, Debian GNU/Linux 11 (bullseye), Kernel 5.10.0-21-arm64, data files located on a mounted 120 GiB ext4 volume
     * `time pbzip2 -dc wikidata-20230424-all.json.bz2 >/dev/null`, parallel pbzip2 version 1.1.13 → real 926m39.401s, user 930m39.828s, sys 3m30.333s
