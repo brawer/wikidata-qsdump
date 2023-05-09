@@ -1,6 +1,6 @@
 # Experiment: New Format for Wikidata Dumps?
 
-This is an experiment for a simpler, smaller and much faster (to decompress)
+This is an experiment for a simpler, smaller and faster (to decompress)
 data format for [Wikidata dumps](https://www.wikidata.org/wiki/Wikidata:Database_download).
 
 | Format      |     Size¹ | Tool   | Decompression time² |
@@ -36,8 +36,8 @@ As of May 2023, the most compact format for [Wikidata
 dumps](https://dumps.wikimedia.org/wikidatawiki/entities/20230424/) is
 JSON with bzip2 compression.  However, the current JSON syntax is very
 verbose, which makes it slow to process. Another issue is bzip2: since
-its invention 27 years ago, newer algorithms have been designed that
-can be decompressed much faster on today’s machines.
+its invention 27 years ago, newer algorithms have been designed for
+fast decompression on today’s machines.
 
 As a frequent user of Wikidata dumps, I got annoyed by the high cost of
 processing the current format, and I wondered how much could be gained
