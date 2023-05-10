@@ -11,7 +11,7 @@ data format for [Wikidata dumps](https://www.wikidata.org/wiki/Wikidata:Database
 | `.json.gz`  | 115.2 GiB | gzip   |          89 minutes |
 | `.json.zst` |  72.3 GiB | zstd   |          19 minutes |
 | `.qs.br`    |  25.9 GiB | brotli |          11 minutes |
-| `.qs.bz2`   |  26.3 GiB | pbzip2 |                TODO |
+| `.qs.bz2`   |  26.3 GiB | pbzip2 |          94 minutes |
 | `.qs.bz2`   |  26.3 GiB | lbzip2 |           7 minutes |
 | `.qs.gz`    |  38.9 GiB | gzip   |          23 minutes |
 | `.qs.zst`   |  26.6 GiB | zstd   |           6 minutes |
@@ -112,11 +112,14 @@ as a wishlist for re-implementing Wikidata dumps.
     * `wikidata-20230424-all.qs.zst`:    28567267401 bytes =  26.6 GiB
 
 2. Decompression time measured on [Hetzner Cloud](https://www.hetzner.com/cloud), Falkenstein data center, virtual machine model CAX41, Ampere ARM64 CPU, 16 cores, 32 GB RAM, Debian GNU/Linux 11 (bullseye), Kernel 5.10.0-21-arm64, data files located on a mounted ext4 volume
+
     * `time pbzip2 -cd wikidata-20230424-all.json.bz2 >/dev/null`, parallel pbzip2 version 1.1.13 → real 926m39.401s, user 930m39.828s, sys 3m30.333s
     * `time lbzcat -cd wikidata-20230424-all.json.bz2 >/dev/null`, lbzip2 version 2.5 → real 59m30.694s, user 943m48.935s, sys 7m30.243s
     * `time gzip -cd wikidata-20230424-all.json.gz >/dev/null`, gzip version 1.10 → real 88m44.009s, user 86m25.866s, sys 1m18.897s
     * `time zstdcat wikidata-20230424-all.json.zst >/dev/null`, zstd version 1.4.8 → real 21m46.846s, user 18m53.957s, sys 1m6.578s
+
     * `time brotli -cd wikidata-20230424-all.qs.br >/dev/null`, brotli version 1.0.9 → real 10m31.041s, user 8m25.385s, sys 0m17.338s
+    * `time pbzip2 -cd wikidata-20230424-all.qs.bz2 >/dev/null`, parallel pbzip2 version 1.1.13 → real 93m36.174s, user 94m50.751s, sys 0m40.565s
     * `time lbzcat -cd wikidata-20230424-all.qs.bz2 >/dev/null`, lbzip2 version 2.5 → real 7m3.783s, user 109m57.272s, sys 2m19.303s
     * `time gzip -cd wikidata-20230424-all.qs.gz >/dev/null`, gzip version 1.10 → real 22m48.054s, user 22m8.762s, sys 0m21.047s
     * `time zstdcat wikidata-20230424-all.qs.zst >/dev/null`, zstd version 1.4.8 → run 1: real 5m58.011s, user 5m51.994s, sys 0m5.996s;
