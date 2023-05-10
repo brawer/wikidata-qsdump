@@ -10,7 +10,7 @@ data format for [Wikidata dumps](https://www.wikidata.org/wiki/Wikidata:Database
 | `.json.bz2` |  75.9 GiB | lbzip2 |          59 minutes |
 | `.json.gz`  | 115.2 GiB | gzip   |                TODO |
 | `.json.zst` |  72.3 GiB | zstd   |          19 minutes |
-| `.qs.br`    |      TODO | brotli |                TODO |
+| `.qs.br`    |  25.9 GiB | brotli |                TODO |
 | `.qs.bz2`   |  26.3 GiB | pbzip2 |                TODO |
 | `.qs.bz2`   |  26.3 GiB | lbzip2 |                TODO |
 | `.qs.gz`    |  38.9 GiB | gzip   |          23 minutes |
@@ -111,6 +111,7 @@ as a wishlist for re-implementing Wikidata dumps.
     * `wikidata-20230424-all.json.bz2`:  81539742715 bytes =  75.9 GiB
     * `wikidata-20230424-all.json.gz`:  123717867013 bytes = 115.2 GiB
     * `wikidata-20230424-all.json.zst`:  77593744874 bytes =  72.3 GiB
+    * `wikidata-20230424-all.qs.br`:     27787010556 bytes =  25.9 GiB
     * `wikidata-20230424-all.qs.bz2`:    28229997539 bytes =  26.3 GiB
     * `wikidata-20230424-all.qs.gz`:     41820873140 bytes =  38.9 GiB
     * `wikidata-20230424-all.qs.zst`:    28567267401 bytes =  26.6 GiB
