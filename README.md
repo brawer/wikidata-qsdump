@@ -12,7 +12,7 @@ data format for [Wikidata dumps](https://www.wikidata.org/wiki/Wikidata:Database
 | `.json.zst` |  72.3 GiB | zstd   |          19 minutes |
 | `.qs.br`    |  25.9 GiB | brotli |          11 minutes |
 | `.qs.bz2`   |  26.3 GiB | pbzip2 |                TODO |
-| `.qs.bz2`   |  26.3 GiB | lbzip2 |                TODO |
+| `.qs.bz2`   |  26.3 GiB | lbzip2 |           7 minutes |
 | `.qs.gz`    |  38.9 GiB | gzip   |          23 minutes |
 | `.qs.zst`   |  26.6 GiB | zstd   |           6 minutes |
 
@@ -21,13 +21,8 @@ The proposed new format,
 [QuickStatements](https://www.wikidata.org/wiki/Help:QuickStatements)
 with [Zstandard](https://en.wikipedia.org/wiki/Zstd) compression,
 takes about a third of the current best file size. On a typical modern
-cloud server, decompression is about 10 times faster compared to lbzip2,
-an exotic tool for the bzip2 format.
-(Compared to the more commonly used pbzip2 tool, the speed-up is 150 times;
-despite being designed for multi-core machines, pbzip2 appears to use
-just a single core, possibly due to a structural quirk of Wikidata dumps).
-The speed-up can largely be explained with a compression algorithm
-that has been designed for fast decompression on today’s hardware.
+cloud server, decompression is about 10 times faster compared to lbzip2
+on the current JSON dumps.
 
 
 ## Motivation
@@ -121,6 +116,7 @@ as a wishlist for re-implementing Wikidata dumps.
     * `time zstdcat wikidata-20230424-all.json.zst >/dev/null`, zstd version 1.4.8 → real 21m46.846s, user 18m53.957s, sys 1m6.578s
 	* `time lbzcat -cd wikidata-20230424-all.json.bz2 >/dev/null`, lbzip2 version 2.5 → real 59m30.694s, user 943m48.935s, sys 7m30.243s
     * `time brotli -cd wikidata-20230424-all.qs.br >/dev/null`, brotli version 1.0.9 → real 10m31.041s, user 8m25.385s, sys 0m17.338s
+    * `time lbzcat -cd wikidata-20230424-all.qs.bz2 >/dev/null`, lbzip2 version 2.5 → real 7m3.783s, user 109m57.272s, sys 2m19.303s
 	* `time gzip -cd wikidata-20230424-all.qs.gz >/dev/null`, gzip version 1.10 → real 22m48.054s, user 22m8.762s, sys 0m21.047s
     * `time zstdcat wikidata-20230424-all.qs.zst >/dev/null`, zstd version 1.4.8 → run 1: real 5m58.011s, user 5m51.994s, sys 0m5.996s;
 	run 2: real 5m55.021s, user 5m47.642s, sys 0m7.364s;
