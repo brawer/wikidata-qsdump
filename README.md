@@ -113,13 +113,13 @@ as a wishlist for re-implementing Wikidata dumps.
 
 2. Decompression time measured on [Hetzner Cloud](https://www.hetzner.com/cloud), Falkenstein data center, virtual machine model CAX41, Ampere ARM64 CPU, 16 cores, 32 GB RAM, Debian GNU/Linux 11 (bullseye), Kernel 5.10.0-21-arm64, data files located on a mounted ext4 volume
     * `time pbzip2 -cd wikidata-20230424-all.json.bz2 >/dev/null`, parallel pbzip2 version 1.1.13 → real 926m39.401s, user 930m39.828s, sys 3m30.333s
-    * `time gzip -cd wikidata-20230424-all.json.gz >/dev/null` → real 88m44.009s, user 86m25.866s, sys 1m18.897s
+    * `time lbzcat -cd wikidata-20230424-all.json.bz2 >/dev/null`, lbzip2 version 2.5 → real 59m30.694s, user 943m48.935s, sys 7m30.243s
+    * `time gzip -cd wikidata-20230424-all.json.gz >/dev/null`, gzip version 1.10 → real 88m44.009s, user 86m25.866s, sys 1m18.897s
     * `time zstdcat wikidata-20230424-all.json.zst >/dev/null`, zstd version 1.4.8 → real 21m46.846s, user 18m53.957s, sys 1m6.578s
-	* `time lbzcat -cd wikidata-20230424-all.json.bz2 >/dev/null`, lbzip2 version 2.5 → real 59m30.694s, user 943m48.935s, sys 7m30.243s
     * `time brotli -cd wikidata-20230424-all.qs.br >/dev/null`, brotli version 1.0.9 → real 10m31.041s, user 8m25.385s, sys 0m17.338s
     * `time lbzcat -cd wikidata-20230424-all.qs.bz2 >/dev/null`, lbzip2 version 2.5 → real 7m3.783s, user 109m57.272s, sys 2m19.303s
-	* `time gzip -cd wikidata-20230424-all.qs.gz >/dev/null`, gzip version 1.10 → real 22m48.054s, user 22m8.762s, sys 0m21.047s
+    * `time gzip -cd wikidata-20230424-all.qs.gz >/dev/null`, gzip version 1.10 → real 22m48.054s, user 22m8.762s, sys 0m21.047s
     * `time zstdcat wikidata-20230424-all.qs.zst >/dev/null`, zstd version 1.4.8 → run 1: real 5m58.011s, user 5m51.994s, sys 0m5.996s;
-	run 2: real 5m55.021s, user 5m47.642s, sys 0m7.364s;
-	run 3: real 5m53.228s, user 5m47.401s, sys 0m5.820s;
-	average: real 5m55.420s, user 5m49.012s, sys 0m6.393s
+    run 2: real 5m55.021s, user 5m47.642s, sys 0m7.364s;
+    run 3: real 5m53.228s, user 5m47.401s, sys 0m5.820s;
+    average: real 5m55.420s, user 5m49.012s, sys 0m6.393s
